@@ -16,7 +16,7 @@ class Academy(models.Model):
     name = models.CharField(max_length=50)
     direction = models.CharField(max_length=150)
     city = models.CharField(max_length=50)
-    teacher = models.ForeignKey(Teacher)
+    teacher = models.ForeignKey(Teacher, blank=True, null=True)
     #students = models.ForeignKey(Student)
 
 

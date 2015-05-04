@@ -1,0 +1,9 @@
+{% if academies_list %}
+    <ul>
+    {% for academy in academies_list %}
+        <li><a href="/AcademyApp/academies/get/{{ academy.id }}/">{{ academy.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No academies are available.</p>
+{% endif %}

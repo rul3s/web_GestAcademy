@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from models import *
+from django.template import RequestContext, loader
 
 # Create your views here.
 
@@ -23,10 +24,13 @@ def index(request):
 
 
 def students(request):
-    output = "*************Students LIST*************<br>"
-    students_list = Student.objects.order_by('registered')
-    output += ', '.join([s.name for s in students_list])
-    return HttpResponse(output)
+    latest_students_list = Student.objects.order_by('registered')
+    template = loader.get_template('AcademyApp/students.html')
+    context = RequestContext(request, {
+        'latest_students_list': latest_students_list,
+    })
+
+    return HttpResponse(template.render(context))
 
 
 def student(request, student_id):
@@ -34,10 +38,13 @@ def student(request, student_id):
 
 
 def teachers(request):
-    output = "*************Teachers LIST*************<br>"
     teachers_list = Teacher.objects.order_by('registered')
-    output += ', '.join([t.name for t in teachers_list])
-    return HttpResponse(output)
+    template = loader.get_template('AcademyApp/teachers.html')
+    context = RequestContext(request, {
+        'teachers_list': teachers_list,
+    })
+
+    return HttpResponse(template.render(context))
 
 
 def teacher(request, teacher_id):
@@ -45,10 +52,13 @@ def teacher(request, teacher_id):
 
 
 def academies(request):
-    output = "*************Academies LIST*************<br>"
     academies_list = Academy.objects.order_by('registered')
-    output += ', '.join([a.name for a in academies_list])
-    return HttpResponse(output)
+    template = loader.get_template('AcademyApp/academies.html')
+    context = RequestContext(request, {
+        'academies_list': academies_list,
+    })
+
+    return HttpResponse(template.render(context))
 
 
 def academy(request, academy_id):

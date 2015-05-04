@@ -1,0 +1,12 @@
+{% if tchr %}
+    <ul>
+        <li>Name: {{  tchr.name }}</li>
+        <li>Direction: {{ tchr.direction }}</li>
+        <li>City: {{ tchr.city }}</li>
+        <li>Telephone: {{ tchr.telephone }}</li>
+        <li>Email: {{ tchr.email }}</li>
+        <li>Academy: {{ tchr.academy }}</li>
+    </ul>
+{% else %}
+    Problem getting teacher
+{% endif %}

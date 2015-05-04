@@ -1,0 +1,12 @@
+{% if std %}
+    <ul>
+        <li>Name: {{  std.name }}</li>
+        <li>Direction: {{ std.direction }}</li>
+        <li>City: {{ std.city }}</li>
+        <li>Telephone: {{ std.telephone }}</li>
+        <li>Email: {{ std.email }}</li>
+        <li>Academy: {{ std.academy }}</li>
+    </ul>
+{% else %}
+    Problem getting student
+{% endif %}

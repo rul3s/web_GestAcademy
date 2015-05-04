@@ -1,7 +1,7 @@
 {% if teachers_list %}
     <ul>
     {% for teacher in teachers_list %}
-        <li><a href="/AcademyApp/teacher/get/{{ teacher.id }}/">{{ teacher.name }}</a></li>
+        <li><a href="{%  url 'getTeacher' teacher.id %}}/">{{ teacher.name }}</a></li>
     {% endfor %}
     </ul>
 {% else %}

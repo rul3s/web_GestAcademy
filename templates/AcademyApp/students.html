@@ -1,7 +1,7 @@
-{% if latest_students_list %}
+{% if students_list %}
     <ul>
-    {% for student in latest_students_list %}
-        <li><a href="/AcademyApp/students/get/{{ student.id }}/">{{ student.name }}</a></li>
+    {% for student in students_list %}
+        <li><a href="{%  url 'getStudent' student.id %}/">{{ student.name }}</a></li>
     {% endfor %}
     </ul>
 {% else %}

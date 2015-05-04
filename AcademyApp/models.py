@@ -5,12 +5,13 @@ import datetime
 
 
 class Student(models.Model):
-    name = models.CharField(max_length=60)
+    name = models.CharField(max_length=50)
     direction = models.CharField(max_length=150)
     city = models.CharField(max_length=50)
     telephone = models.CharField(max_length=9)
     email = models.EmailField()
     academy = models.ForeignKey('Academy', blank=True, null=True)
+    registered = models.DateTimeField(default=datetime.datetime.now())
 
     def __str__(self):
         return self.name

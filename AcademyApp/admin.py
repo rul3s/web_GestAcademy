@@ -10,7 +10,7 @@ class StudentAdmin(admin.ModelAdmin):
         ('Registered on', {'fields': ['registered'], 'classes': ['collapse']})
     ]
 
-    list_display = ('name', 'registered', 'city')
+    list_display = ('name', 'registered', 'email', 'city')
 
 
 admin.site.register(Academy)

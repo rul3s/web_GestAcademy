@@ -5,7 +5,7 @@ import datetime
 
 
 class Student(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, default="std")
     direction = models.CharField(max_length=150)
     city = models.CharField(max_length=50)
     telephone = models.CharField(max_length=9)

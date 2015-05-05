@@ -1,9 +1,10 @@
 {% if acdmy %}
+    <h1>{{  acdmy.name }}</h1>
     <ul>
-        <li>Name: {{  acdmy.name }}</li>
         <li>Direction: {{ acdmy.direction }}</li>
         <li>City: {{ acdmy.city }}</li>
     </ul>
 {% else %}
     Problem getting academy
 {% endif %}
+    <a href="javascript:history.back()">Go back</a>

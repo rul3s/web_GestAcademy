@@ -1,9 +1,16 @@
 {% if students_list %}
+    <h1>LIST OF CURRENT STUDENTS</h1>
     <ul>
     {% for student in students_list %}
         <li><a href="{%  url 'getStudent' student.id %}/">{{ student.name }}</a></li>
     {% endfor %}
     </ul>
+    <h2>Get info in</h2>
+    <ul>
+        <li><a href="{%  url 'getStudents'%}.json">JSON</a></li>
+        <li><a href="{%  url 'getStudents'%}.xml">XML</a></li>
+    </ul>
 {% else %}
     <p>No students are available.</p>
 {% endif %}
+    <a href="javascript:history.back()">Go back</a>

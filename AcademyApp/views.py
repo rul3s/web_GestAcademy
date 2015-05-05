@@ -3,6 +3,7 @@ from django.http import HttpResponse, Http404
 from models import *
 from django.template import RequestContext, loader
 from django.core import serializers
+from urls import *
 
 # Create your views here.
 
@@ -10,17 +11,11 @@ from django.core import serializers
 def index(request):
     output = "*************DATABASE GENERAL INFO***************<br>"
 
-    output += "<br><br>Academies:<br>"
-    academies_list = Academy.objects.order_by('registered')
-    output += ', '.join([a.name for a in academies_list])
+    output += "<br><br><a href=http://127.0.0.1:8000/AcademyApp/academies/get/list>Academies:</a><br>"
 
-    output += "<br><br>Teachers:<br>"
-    teachers_list = Teacher.objects.order_by('registered')
-    output += ', '.join([t.name for t in teachers_list])
+    output += "<br><br><a href=http://127.0.0.1:8000/AcademyApp/teachers/get/list>Teachers:</a><br>"
 
-    output += "<br><br>Students:<br>"
-    students_list = Student.objects.order_by('registered')
-    output += ', '.join([s.name for s in students_list])
+    output += "<br><br><a href=http://127.0.0.1:8000/AcademyApp/students/get/list>Students:</a><br>"
     return HttpResponse(output)
 
 

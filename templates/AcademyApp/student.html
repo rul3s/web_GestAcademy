@@ -1,6 +1,6 @@
 {% if std %}
+    <h1>{{  std.name }}</h1>
     <ul>
-        <li>Name: {{  std.name }}</li>
         <li>Direction: {{ std.direction }}</li>
         <li>City: {{ std.city }}</li>
         <li>Telephone: {{ std.telephone }}</li>
@@ -10,3 +10,4 @@
 {% else %}
     Problem getting student
 {% endif %}
+    <a href="javascript:history.back()">Go back</a>

@@ -1,9 +1,16 @@
 {% if academies_list %}
+    <h1>LIST OF CURRENT ACADEMIES</h1>
     <ul>
     {% for academy in academies_list %}
         <li><a href="{%  url 'getAcademy' academy.id %}}/">{{ academy.name }}</a></li>
     {% endfor %}
     </ul>
+    <h2>Get info in</h2>
+    <ul>
+        <li><a href="{%  url 'getAcademies'%}.json">JSON</a></li>
+        <li><a href="{%  url 'getAcademies'%}.xml">XML</a></li>
+    </ul>
 {% else %}
     <p>No academies are available.</p>
 {% endif %}
+    <a href="javascript:history.back()">Go back</a>

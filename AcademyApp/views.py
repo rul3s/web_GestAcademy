@@ -36,10 +36,8 @@ def auth_user(request):
     return HttpResponse(template.render())
 
 
-@login_required
-def index(request, user):
-    template = loader.get_template('AcademyApp/index.html')
-    return HttpResponse(template.render())
+def index(request):
+    return render(request, 'AcademyApp/index.html', {})
 
 
 def students(request):

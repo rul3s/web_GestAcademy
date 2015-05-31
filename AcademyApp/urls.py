@@ -3,9 +3,10 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    # regularExpr, view, keyword args, name
-    # ex: /AcademyApp/
-    url(r'^$', views.index, name='index'),
+
+    url(r'^$', views.login_page, name='login_page'),
+    url(r'^auth', views.auth_user, name='auth'),
+    url(r'^index$', views.index, name='index'),
 
     # ex: /AcademyApp/get/list
     url(r'^students/get/list$', views.students, name='getStudents'),

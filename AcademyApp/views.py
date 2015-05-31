@@ -1,26 +1,44 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from models import *
 from django.template import RequestContext, loader
 from django.core import serializers
-from urls import *
+from django.contrib.auth import authenticate, login
+from django.conf import settings
+from django.shortcuts import redirect
+
 
 # Create your views here.
 
+def login_page(request):
+    template = loader.get_template('AcademyApp/login.html')
+    return HttpResponse(template.render())
 
-def index(request):
+
+def auth_user(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        if user.is_active:
+            login(request, user)
+            # Redirect to a success page.
+            return redirect("index")
+
+        else:
+            # Return a 'disabled account' error message
+            template = loader.get_template('AcademyApp/error.html')
+    else:
+        # Return an 'invalid login' error message.
+        template = loader.get_template('AcademyApp/error.html')
+
+    return HttpResponse(template.render())
+
+
+@login_required
+def index(request, user):
     template = loader.get_template('AcademyApp/index.html')
-    '''
-    output = "*************DATABASE GENERAL INFO***************<br>"
-
-    output += "<br><br><a href=http://127.0.0.1:8000/AcademyApp/academies/get/list>Academies:</a><br>"
-
-    output += "<br><br><a href=http://127.0.0.1:8000/AcademyApp/teachers/get/list>Teachers:</a><br>"
-
-    output += "<br><br><a href=http://127.0.0.1:8000/AcademyApp/students/get/list>Students:</a><br>"
-
-    return HttpResponse(output)
-    '''
     return HttpResponse(template.render())
 
 

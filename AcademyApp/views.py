@@ -7,39 +7,6 @@ from .forms import *
 
 
 # Create your views here.
-def get_name(request):
-    if request.method == 'POST':
-        form = NameForm(request.POST)
-
-        if form.is_valid():
-            return HttpResponseRedirect('/thanks/')
-    else:
-        form = NameForm()
-
-    return render(request, 'AcademyApp/name.html', {'form': form})
-
-def add_std(request):
-    if request.method == 'POST':
-        form = StdForm(request.POST)
-
-        if form.is_valid():
-            form.save()
-
-            return HttpResponseRedirect('get/list')
-    else:
-        form = StdForm()
-
-    return render(request, 'AcademyApp/addStudent.html', {'form': form})
-
-
-def edit_std(request, student_id):
-    std = Student.objects.get(pk=student_id)
-    form = StdForm(instance=std)
-    if form.is_valid():
-        form.save()
-        return redirect('next_view')
-    return render(request, 'AcademyApp/addStudent.html', {'form': form})
-
 
 def login_view(request):
     template = loader.get_template('AcademyApp/login.html')
@@ -75,6 +42,34 @@ def index(request):
     return render(request, 'AcademyApp/index.html', {})
 
 
+def add_std(request):
+    if request.method == 'POST':
+        form = StdForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+
+            return HttpResponseRedirect('get/list')
+    else:
+        form = StdForm()
+
+    return render(request, 'AcademyApp/addStudent.html', {'form': form})
+
+
+def edit_std(request, student_id):
+    std = Student.objects.get(pk=student_id)
+    form = StdForm(instance=std)
+    if form.is_valid():
+        form.save()
+        return students(request)
+    return render(request, 'AcademyApp/addStudent.html', {'form': form})
+
+
+def rem_std(request, student_id):
+    Student.objects.get(pk=student_id).delete()
+    return students(request)
+
+
 def students(request):
     students_list = Student.objects.order_by('registered')
     template = loader.get_template('AcademyApp/students.html')
@@ -102,6 +97,34 @@ def studentsjson(request):
 
 def studentsxml(request):
     return HttpResponse(serializers.serialize('xml', Student.objects.all()))
+
+
+def add_tchr(request):
+    if request.method == 'POST':
+        form = TchrForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+
+            return HttpResponseRedirect('get/list')
+    else:
+        form = StdForm()
+
+    return render(request, 'AcademyApp/addStudent.html', {'form': form})
+
+
+def edit_std(request, student_id):
+    std = Student.objects.get(pk=student_id)
+    form = StdForm(instance=std)
+    if form.is_valid():
+        form.save()
+        return students(request)
+    return render(request, 'AcademyApp/addStudent.html', {'form': form})
+
+
+def rem_std(request, student_id):
+    Student.objects.get(pk=student_id).delete()
+    return students(request)
 
 
 def teachers(request):

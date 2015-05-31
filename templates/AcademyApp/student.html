@@ -51,8 +51,9 @@
                         <td>{{ std.academy }}</td>
                     </tr>
                     <tr>
-                        <th><a href="javascript:history.back()"><img class="bt" id="return2" src="{% static "img/return.png"%}" /></a>
-                            <a href="{%  url 'editStudent' std.id %}/"><img class="bt" id="return2" src="{% static "img/edit.png"%}" /></a></th>
+                        <th><a href="javascript:history.back()"><img class="bt" src="{% static "img/return.png"%}" /></a>
+                            <a href="{%  url 'editStudent' std.id %}/"><img class="bt" src="{% static "img/edit.png"%}" /></a>
+                            <a href="{%  url 'remStudent' std.id %}/"><img class="bt" src="{% static "img/remove.png"%}" /></a></th>
                     </tr>
                 </tbody>
             </table>

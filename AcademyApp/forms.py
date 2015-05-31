@@ -17,3 +17,25 @@ class StdForm(ModelForm):
                   'registered'
                   ]
 
+class TchrForm(ModelForm):
+    class Meta:
+        model = Teacher
+        fields = ['name',
+                  'direction',
+                  'city', 'telephone',
+                  'email',
+                  'academy',
+                  'registered'
+                  ]
+
+class AcdmyForm(ModelForm):
+    class Meta:
+        model = Academy
+        fields = ['name',
+                  'direction',
+                  'city', 'telephone',
+                  'email',
+                  'academy',
+                  'registered'
+                  ]
+

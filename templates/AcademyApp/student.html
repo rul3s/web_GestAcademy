@@ -1,13 +1,65 @@
-{% if std %}
-    <h1>{{  std.name }}</h1>
-    <ul>
-        <li>Direction: {{ std.direction }}</li>
-        <li>City: {{ std.city }}</li>
-        <li>Telephone: {{ std.telephone }}</li>
-        <li>Email: {{ std.email }}</li>
-        <li>Academy: {{ std.academy }}</li>
-    </ul>
-{% else %}
-    Problem getting student
-{% endif %}
-    <a href="javascript:history.back()">Go back</a>
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>GestAcademy v0.2</title>
+    <link rel="stylesheet" type="text/css" href="{% static "css/index.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/students.css" %}">
+</head>
+
+<body background="{% static "img/bg1.jpg" %}">
+    <div id="content">
+        <div id="main">
+            <header>
+                <img src="{% static "img/title.jpg" %}">
+            </header>
+        </div>
+        <nav>
+            <ul class="menu">
+                <li id="start"><a href="{%  url 'getAcademies'%}">View Academies</a></li>
+                <li id="history"><a href="{%  url 'getTeachers'%}">View Teachers</a></li>
+                <li id="photos"><a href="{%  url 'getStudents'%}">View Students</a></li>
+            </ul>
+        </nav>
+        <section>
+        {% if std %}
+            <table>
+                <caption>Student information</caption>
+                <tbody>
+                    <tr>
+                        <th>Name</th>
+                        <td>{{  std.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>City</th>
+                        <td>{{ std.city }}</td>
+                    </tr>
+                    <tr>
+                        <th>Street</th>
+                        <td>{{ std.direction }}</td>
+                    </tr>
+                    <tr>
+                        <th>Phone Number</th>
+                        <td>{{ std.telephone }}</td>
+                    </tr>
+                    <tr>
+                        <th>eMail</th>
+                        <td>{{ std.email }}</td>
+                    </tr>
+                    <tr>
+                        <th>Academy</th>
+                        <td>{{ std.academy }}</td>
+                    </tr>
+                    <tr>
+                        <th><a href="javascript:history.back()"><img id="return2" src="{% static "img/return.png"%}" /></a></th>
+                    </tr>
+                </tbody>
+            </table>
+            {% else %}
+                <h1>Problem getting student</h1>
+            {% endif %}
+
+        </section>
+    </div>
+</body>

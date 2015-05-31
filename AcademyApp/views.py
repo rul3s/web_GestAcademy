@@ -9,6 +9,8 @@ from urls import *
 
 
 def index(request):
+    template = loader.get_template('AcademyApp/index.html')
+    '''
     output = "*************DATABASE GENERAL INFO***************<br>"
 
     output += "<br><br><a href=http://127.0.0.1:8000/AcademyApp/academies/get/list>Academies:</a><br>"
@@ -16,7 +18,10 @@ def index(request):
     output += "<br><br><a href=http://127.0.0.1:8000/AcademyApp/teachers/get/list>Teachers:</a><br>"
 
     output += "<br><br><a href=http://127.0.0.1:8000/AcademyApp/students/get/list>Students:</a><br>"
+
     return HttpResponse(output)
+    '''
+    return HttpResponse(template.render())
 
 
 def students(request):

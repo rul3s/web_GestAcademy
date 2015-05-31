@@ -21,24 +21,5 @@
                 <li id="photos"><a href="{%  url 'getStudents'%}">View Students</a></li>
             </ul>
         </nav>
-        <section>
-            {% if students_list %}
-            <h1>Current students list</h1>
-            <ul>
-            {% for student in students_list %}
-                <li><a href="{%  url 'getStudent' student.id %}/">{{ student.name }}</a></li>
-            {% endfor %}
-                <li><a href="javascript:history.back()"><img id="return" src="{% static "img/return.png"%}" /></a></li>
-            </ul>
-        {% else %}
-            <p>No students are available.</p>
-        {% endif %}
-
-        </section>
-        <footer>
-            <p>Download list in:
-                <a href="{%  url 'getStudents'%}.json">JSON</a>
-                <a href="{%  url 'getStudents'%}.xml">XML</a></p>
-        </footer>
     </div>
 </body>

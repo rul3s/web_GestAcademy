@@ -1,0 +1,36 @@
+section{
+    margin-top: 5%;
+    align-self: center;
+    background-color: white;
+}
+
+body {
+    color: purple;
+    background-color: white;
+}
+
+table{
+    margin: 5% auto;
+    width:40%;
+    /*
+    background-color: #6C97BB;
+    border:1px solid black;
+    border-collapse:separate;
+    */
+}
+
+img#return2{
+    height: 30%;
+    width: 30%;
+}
+
+th, td{
+    text-align:left;
+    /*
+    border:1px solid black;
+    */
+}
+
+th{
+    width:35%;
+}

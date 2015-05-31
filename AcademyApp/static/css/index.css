@@ -67,3 +67,21 @@ footer{
     background-color: white;
     width: 60%;
 }
+
+section{
+    align-content: center;
+}
+
+form{
+    margin: 0 auto;
+}
+
+input{
+    margin-left: 40%;
+}
+
+header a{
+    margin-top: 5%;
+    margin-right: 5%;
+    float: right;
+}

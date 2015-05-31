@@ -4,16 +4,21 @@ from django.http import HttpResponse, Http404
 from models import *
 from django.template import RequestContext, loader
 from django.core import serializers
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.conf import settings
 from django.shortcuts import redirect
 
 
 # Create your views here.
 
-def login_page(request):
+def login_view(request):
     template = loader.get_template('AcademyApp/login.html')
     return HttpResponse(template.render())
+
+
+def logout_view(request):
+    logout(request)
+    return render(request, 'AcademyApp/logout.html', {})
 
 
 def auth_user(request):

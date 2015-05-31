@@ -26,9 +26,9 @@
             <h1>Current academies list</h1>
             <ul>
             {% for academy in academies_list %}
-                <li><a href="{%  url 'getAcademy' academy.id %}}/">{{ academy.name }}</a></li>
+                <li><a href="{%  url 'getAcademy' academy.id %}/">{{ academy.name }}</a></li>
             {% endfor %}
-                <li><a href="javascript:history.back()"><img id="return" src="{% static "img/return.png"%}" /></a></li>
+                <li><a href="javascript:history.back()"><img id="return" class="bt" src="{% static "img/return.png"%}" /></a></li>
             </ul>
         {% else %}
             <p>No academies are available.</p>

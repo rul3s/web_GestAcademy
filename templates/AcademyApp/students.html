@@ -28,7 +28,8 @@
             {% for student in students_list %}
                 <li><a href="{%  url 'getStudent' student.id %}/">{{ student.name }}</a></li>
             {% endfor %}
-                <li><a href="javascript:history.back()"><img id="return" src="{% static "img/return.png"%}" /></a></li>
+                <li><a href="javascript:history.back()"><img class="bt" id="return" src="{% static "img/return.png"%}" /></a>
+                    <a href="{%  url 'add_std' %}"><img class="bt" id="return" src="{% static "img/add.png"%}" /></a></li>
             </ul>
         {% else %}
             <p>No students are available.</p>

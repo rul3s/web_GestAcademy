@@ -11,19 +11,18 @@
     <div id="content">
         <div id="main">
             <header>
+                <p>Logged as {{user.username}} <a href="{%  url 'logout_view'%}">logout</a></p>
                 <img src="{% static "img/title.jpg" %}">
-                <a href="{%  url 'logout_view'%}">logout</a>
             </header>
         </div>
         <nav>
             <ul class="menu">
-                <li id="start"><a href="{%  url 'getAcademies'%}">View Academies</a></li>
-                <li id="history"><a href="{%  url 'getTeachers'%}">View Teachers</a></li>
-                <li id="photos"><a href="{%  url 'getStudents'%}">View Students</a></li>
+                <li><a href="{%  url 'getAcademies'%}">View Academies</a></li>
+                <li><a href="{%  url 'getTeachers'%}">View Teachers</a></li>
+                <li><a href="{%  url 'getStudents'%}">View Students</a></li>
             </ul>
         </nav>
         <section>
-            <h1>HI {{user.username}} !!</h1>
         </section>
     </div>
 </body>

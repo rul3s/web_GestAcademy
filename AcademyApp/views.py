@@ -1,15 +1,45 @@
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
-from django.http import HttpResponse, Http404
-from models import *
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.template import RequestContext, loader
 from django.core import serializers
 from django.contrib.auth import authenticate, login, logout
-from django.conf import settings
-from django.shortcuts import redirect
+from .forms import *
 
 
 # Create your views here.
+def get_name(request):
+    if request.method == 'POST':
+        form = NameForm(request.POST)
+
+        if form.is_valid():
+            return HttpResponseRedirect('/thanks/')
+    else:
+        form = NameForm()
+
+    return render(request, 'AcademyApp/name.html', {'form': form})
+
+def add_std(request):
+    if request.method == 'POST':
+        form = StdForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+
+            return HttpResponseRedirect('get/list')
+    else:
+        form = StdForm()
+
+    return render(request, 'AcademyApp/addStudent.html', {'form': form})
+
+
+def edit_std(request, student_id):
+    std = Student.objects.get(pk=student_id)
+    form = StdForm(instance=std)
+    if form.is_valid():
+        form.save()
+        return redirect('next_view')
+    return render(request, 'AcademyApp/addStudent.html', {'form': form})
+
 
 def login_view(request):
     template = loader.get_template('AcademyApp/login.html')

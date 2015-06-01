@@ -11,7 +11,7 @@
     <div id="content">
         <div id="main">
             <header>
-                <img src="{% static "img/title.jpg" %}">
+                <a href="/AcademyApp/index"><img src="{% static "img/title.jpg" %}"/></a>
             </header>
         </div>
         <nav>
@@ -24,7 +24,7 @@
         <section>
         {% if acdmy %}
             <table>
-                <caption>Academy information</caption>
+                <caption><h1>Academy information</h1></caption>
                 <tbody>
                     <tr>
                         <th>Name</th>
@@ -39,19 +39,9 @@
                         <td>{{ acdmy.direction }}</td>
                     </tr>
                     <tr>
-                        <th>Phone Number</th>
-                        <td>{{ acdmy.telephone }}</td>
-                    </tr>
-                    <tr>
-                        <th>eMail</th>
-                        <td>{{ acdmy.email }}</td>
-                    </tr>
-                    <tr>
-                        <th>Academy</th>
-                        <td>{{ acdmy.academy }}</td>
-                    </tr>
-                    <tr>
-                        <th><a href="javascript:history.back()"><img id="return2" src="{% static "img/return.png"%}" /></a></th>
+                        <th><a href="javascript:history.back()"><img class="bt" src="{% static "img/return.png"%}" /></a>
+                            <a href="{%  url 'editAcademy' acdmy.id %}/"><img class="bt" src="{% static "img/edit.png"%}" /></a>
+                            <a href="{%  url 'remAcademy' acdmy.id %}/"><img class="bt" src="{% static "img/remove.png"%}" /></a></th>
                     </tr>
                 </tbody>
             </table>
@@ -62,15 +52,3 @@
         </section>
     </div>
 </body>
-
-
-{% if acdmy %}
-    <h1>{{  acdmy.name }}</h1>
-    <ul>
-        <li>Direction: {{ acdmy.direction }}</li>
-        <li>City: {{ acdmy.city }}</li>
-    </ul>
-{% else %}
-    Problem getting academy
-{% endif %}
-    <a href="javascript:history.back()">Go back</a>

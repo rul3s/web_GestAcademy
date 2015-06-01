@@ -11,7 +11,7 @@
     <div id="content">
         <div id="main">
             <header>
-                <img src="{% static "img/title.jpg" %}">
+                <a href="/AcademyApp/index"><img src="{% static "img/title.jpg" %}"/></a>
             </header>
         </div>
         <nav>
@@ -26,13 +26,16 @@
             <h1>Current teachers list</h1>
             <ul>
             {% for teacher in teachers_list %}
-                <li><a href="{%  url 'getTeacher' teacher.id %}}/">{{ teacher.name }}</a></li>
+                <li><a href="{%  url 'getTeacher' teacher.id %}/">{{ teacher.name }}</a></li>
             {% endfor %}
-                <li><a href="javascript:history.back()"><img class="bt" id="return" src="{% static "img/return.png"%}" /></a></li>
             </ul>
         {% else %}
             <p>No teachers are available.</p>
         {% endif %}
+            <ul>
+                <li><a href="javascript:history.back()"><img class="bt" id="return" src="{% static "img/return.png"%}" /></a>
+                    <a href="{%  url 'addTeacher' %}"><img class="bt" id="return" src="{% static "img/add.png"%}" /></a></li>
+            </ul>
 
         </section>
         <footer>

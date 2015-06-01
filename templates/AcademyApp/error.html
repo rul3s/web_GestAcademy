@@ -1,3 +1,34 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>GestAcademy v0.2</title>
+    <link rel="stylesheet" type="text/css" href="{% static "css/index.css" %}">
+</head>
+
+<body background="{% static "img/bg1.jpg" %}">
+    <div id="content">
+        <div id="main">
+            <header>
+                <p>Logged as {{user.username}} <a href="{%  url 'logout_view'%}">logout</a></p>
+                <a href="/AcademyApp/index"><img src="{% static "img/title.jpg" %}"/></a>
+            </header>
+        </div>
+        <nav>
+            <ul class="menu">
+                <li><a href="{%  url 'getAcademies'%}">View Academies</a></li>
+                <li><a href="{%  url 'getTeachers'%}">View Teachers</a></li>
+                <li><a href="{%  url 'getStudents'%}">View Students</a></li>
+            </ul>
+        </nav>
+        <section>
+            <h1> LOGIN ERROR, <a href="javascript:history.back()"> return </a> </h1>
+
+        </section>
+    </div>
+</body>
+
 <!DOCTYPE html>
 <html>
 <head lang="en">

@@ -1,5 +1,6 @@
 from django import forms
 from django.forms import ModelForm
+from django.views.generic.edit import UpdateView
 from AcademyApp.models import *
 
 class NameForm(forms.Form):
@@ -17,6 +18,7 @@ class StdForm(ModelForm):
                   'registered'
                   ]
 
+
 class TchrForm(ModelForm):
     class Meta:
         model = Teacher
@@ -33,9 +35,7 @@ class AcdmyForm(ModelForm):
         model = Academy
         fields = ['name',
                   'direction',
-                  'city', 'telephone',
-                  'email',
-                  'academy',
+                  'city',
                   'registered'
                   ]
 

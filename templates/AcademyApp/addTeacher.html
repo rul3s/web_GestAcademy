@@ -23,11 +23,13 @@
         </nav>
         <section>
             <form action="" method="post">
+                <table>
                 {% csrf_token %}
                 {{ form }}
-                <input type="submit" value="Submit" />
+                <tr><th><input type="submit" value="Submit" /> <a href="javascript:history.back()">
+                    <img class="bt" id="return2" src="{% static "img/return.png"%}" /></a></th></tr>
+                </table>
             </form>
-            <a href="javascript:history.back()"><img class="bt" id="return2" src="{% static "img/return.png"%}" /></a>
         </section>
     </div>
 </body>

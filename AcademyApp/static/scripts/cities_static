@@ -1,0 +1,4 @@
+$(function(){
+    var city = ["Lleida", "Mollerusa", "Tarrega", "Balaguer", "Girona"];
+    $( "#id_city" ).autocomplete({ source: city });
+})

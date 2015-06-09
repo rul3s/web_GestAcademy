@@ -56,7 +56,3 @@ class TeacherStudents(models.Model):
 
     def __str__(self):
         return str(self.registered) + " " + self.teacher.name + " " + self.student.name
-
-
-.user_permissions.add(permission, permission, ...)
-myuser.user_permissions.remove(permission, permission, ...)

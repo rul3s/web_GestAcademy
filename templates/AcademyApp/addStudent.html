@@ -5,6 +5,9 @@
     <meta charset="utf-8">
     <title>GestAcademy v0.2</title>
     <link rel="stylesheet" type="text/css" href="{% static "css/index.css" %}">
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script src="{% static "scripts/cities_dyn" %}"></script>
 </head>
 
 <body background="{% static "img/bg1.jpg" %}">
@@ -23,11 +26,16 @@
         </nav>
         <section>
             <form action="{%  url 'addStudent'%}" method="post">
-                {% csrf_token %}
-                {{ form }}
-                <input type="submit" value="Submit" />
+                <table>
+                    {% csrf_token %}
+                    {{ form }}
+                    <tr><th>
+                        <input type="submit" value="Submit" />
+                        <a href="javascript:history.back()"></a><img class="bt" id="return2" src="{% static "img/return.png"%}" /></a>
+                    </th></tr>
+                </table>
             </form>
-            <a href="javascript:history.back()"><img class="bt" id="return2" src="{% static "img/return.png"%}" /></a>
+
         </section>
     </div>
 </body>

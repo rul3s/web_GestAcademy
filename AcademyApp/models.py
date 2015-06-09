@@ -1,6 +1,7 @@
 from django.db import models
 import datetime
-
+from django.contrib.auth.models import Permission
+from django.contrib.contenttypes.models import ContentType
 # Create your models here.
 
 
@@ -15,6 +16,13 @@ class Student(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        default_permissions = (
+            ("add_std", "Can create new student"),
+            ("change_std", "Can change existing student"),
+            ("remove_std", "Can remove existing student"),
+        )
 
 
 class Teacher(models.Model):
@@ -50,6 +58,5 @@ class TeacherStudents(models.Model):
         return str(self.registered) + " " + self.teacher.name + " " + self.student.name
 
 
-
-
-
+.user_permissions.add(permission, permission, ...)
+myuser.user_permissions.remove(permission, permission, ...)

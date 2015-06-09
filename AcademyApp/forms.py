@@ -1,6 +1,5 @@
 from django import forms
 from django.forms import ModelForm
-from django.views.generic.edit import UpdateView
 from AcademyApp.models import *
 
 class NameForm(forms.Form):

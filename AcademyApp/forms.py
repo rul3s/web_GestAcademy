@@ -1,40 +1,19 @@
-from django import forms
 from django.forms import ModelForm
 from AcademyApp.models import *
 
-class NameForm(forms.Form):
-    your_name = forms.CharField(label='Your name', max_length=100)
 
-
-class StdForm(ModelForm):
+class StudentForm(ModelForm):
     class Meta:
         model = Student
-        fields = ['name',
-                  'direction',
-                  'city', 'telephone',
-                  'email',
-                  'academy',
-                  'registered'
-                  ]
+        exclude = ('registered',)
 
 
-class TchrForm(ModelForm):
+class TeacherForm(ModelForm):
     class Meta:
         model = Teacher
-        fields = ['name',
-                  'direction',
-                  'city', 'telephone',
-                  'email',
-                  'academy',
-                  'registered'
-                  ]
+        exclude = ('registered',)
 
-class AcdmyForm(ModelForm):
+class AcademyForm(ModelForm):
     class Meta:
         model = Academy
-        fields = ['name',
-                  'direction',
-                  'city',
-                  'registered'
-                  ]
-
+        exclude = ('registered',)

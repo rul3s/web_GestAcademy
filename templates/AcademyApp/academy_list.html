@@ -1,0 +1,25 @@
+{% include "AcademyApp/header.html" %}
+{% load staticfiles %}
+        <section>
+            {% if object_list %}
+            <h1>Current academies list</h1>
+            <ul>
+            {% for academy in object_list %}
+                <li><a href="{%  url 'academy_detail' academy.id %} ">{{ academy.name }}</a></li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No academies are available.</p>
+        {% endif %}
+            <ul>
+                <li><a href="javascript:history.back()"><img class="bt" id="return" src="{% static "img/return.png"%}" /></a>
+                    <a href="{%  url 'academy_create' %}"><img class="bt" id="return" src="{% static "img/add.png"%}" /></a></li>
+            </ul>
+
+        </section>
+        <footer>
+            <p>Download list in:
+                <a href="{%  url 'academy_list_json' %}.json">JSON</a>
+                <a href="{%  url 'academy_list_xml' %}.xml">XML</a></p>
+        </footer>
+{% include "AcademyApp/footer.html" %}

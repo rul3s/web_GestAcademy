@@ -1,21 +1,19 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, Http404, HttpResponseRedirect
-from django.template import RequestContext, loader
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.template import loader
 from django.core import serializers
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
 from .forms import *
-
+from django.core.urlresolvers import reverse_lazy
 
 def login_view(request):
     template = loader.get_template('AcademyApp/login.html')
     return HttpResponse(template.render())
 
-
 def logout_view(request):
     logout(request)
     return render(request, 'AcademyApp/logout.html', {})
-
 
 def auth_user(request):
     username = request.POST['username']
@@ -36,170 +34,140 @@ def auth_user(request):
 
     return HttpResponse(template.render())
 
-@login_required
 def index(request):
     return render(request, 'AcademyApp/index.html', {})
 
-@login_required
-def add_std(request):
-    if request.method == 'POST':
-        form = StdForm(request.POST)
 
-        if form.is_valid():
-            form.save()
+########################################## STUDENTS ######################################################
+def student_list_json(request):
+    response = HttpResponse(serializers.serialize('json', Student.objects.all()), content_type='text/plain', charset='utf8')
+    response['Content-Disposition'] = 'attachment; filename=students.json'
+    return response
 
-            return HttpResponseRedirect('get/list')
-    else:
-        form = StdForm()
+def student_list_xml(request):
+    response = HttpResponse(serializers.serialize('xml', Student.objects.all()), content_type='text/plain', charset='utf8')
+    response['Content-Disposition'] = 'attachment; filename=students.xml'
+    return response
 
-    return render(request, 'AcademyApp/addStudent.html', {'form': form})
+class StudentDetail(DetailView):
+    model = Student
+    template_name = 'AcademyApp/student_detail.html'
 
-@login_required
-def edit_std(request, student_id=None):
-    obj = get_object_or_404(Student, pk=student_id)
-    form = StdForm(request.POST or None, request.FILES or None, instance=obj)
-    if request.method == 'POST':
-        if form.is_valid():
-            form.save()
-            return students(request)
-    return render(request, 'AcademyApp/addStudent.html', {'form': form})
+    def get_context_data(self, **kwargs):
+        context = super(StudentDetail, self).get_context_data(**kwargs)
+        return context
 
-@login_required
-def rem_std(request, student_id):
-    Student.objects.get(pk=student_id).delete()
-    return students(request)
+class StudentList(ListView):
+    model = Student
+    template_name = 'AcademyApp/student_list.html'
 
-@login_required
-def students(request):
-    students_list = Student.objects.order_by('registered')
-    template = loader.get_template('AcademyApp/students.html')
-    context = RequestContext(request, {
-        'students_list': students_list,
-    })
+class StudentCreate(CreateView):
+    model = Student
+    form_class = StudentForm
+    template_name = 'AcademyApp/form.html'
+    success_url = reverse_lazy('student_list')
 
-    return HttpResponse(template.render(context))
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(StudentCreate, self).form_valid(form)
 
-@login_required
-def student(request, student_id):
-    try:
-        std = Student.objects.get(pk=student_id)
-        context = {'std': std}
-    except Student.DoesNotExist:
-        raise Http404("Student does not exist")
-    return render(request, 'AcademyApp/student.html', context)
-    # return HttpResponse("You're looking for student %s" % student_id)
-    # return HttpResponse("Name = " +std.name)
+class StudentUpdate(UpdateView):
+    model = Student
+    form_class = StudentForm
+    template_name = 'AcademyApp/form.html'
+    success_url = reverse_lazy('student_list')
 
-@login_required
-def studentsjson(request):
-    return HttpResponse(serializers.serialize('json', Student.objects.all()))
+class StudentDelete(DeleteView):
+    model = Student
+    template_name = "AcademyApp/confirm_delete.html"
+    success_url = reverse_lazy('student_list')
 
-@login_required
-def studentsxml(request):
-    return HttpResponse(serializers.serialize('xml', Student.objects.all()))
 
-@login_required
-def add_tchr(request):
-    if request.method == 'POST':
-        form = TchrForm(request.POST)
+########################################## TEACHERS ######################################################
+def teacher_list_json(request):
+    response = HttpResponse(serializers.serialize('json', Teacher.objects.all()), content_type='text/plain', charset='utf8')
+    response['Content-Disposition'] = 'attachment; filename=teachers.json'
+    return response
 
-        if form.is_valid():
-            form.save()
+def teacher_list_xml(request):
+    response = HttpResponse(serializers.serialize('xml', Teacher.objects.all()), content_type='text/plain', charset='utf8')
+    response['Content-Disposition'] = 'attachment; filename=teachers.xml'
+    return response
 
-            return HttpResponseRedirect('get/list')
-    else:
-        form = TchrForm()
+class TeacherDetail(DetailView):
+    model = Teacher
+    template_name = 'AcademyApp/teacher_detail.html'
 
-    return render(request, 'AcademyApp/addTeacher.html', {'form': form})
+    def get_context_data(self, **kwargs):
+        context = super(TeacherDetail, self).get_context_data(**kwargs)
+        return context
 
-@login_required
-def edit_tchr(request, teacher_id):
-    obj = get_object_or_404(Teacher, pk=teacher_id)
-    form = TchrForm(request.POST or None, request.FILES or None, instance=obj)
-    if request.method == 'POST':
-        if form.is_valid():
-            form.save()
-            return teachers(request)
-    return render(request, 'AcademyApp/addTeacher.html', {'form': form})
+class TeacherList(ListView):
+    model = Teacher
+    template_name = 'AcademyApp/teacher_list.html'
 
-@login_required
-def rem_tchr(request, teacher_id):
-    Teacher.objects.get(pk=teacher_id).delete()
-    return teachers(request)
+class TeacherCreate(CreateView):
+    model = Teacher
+    form_class = TeacherForm
+    template_name = 'AcademyApp/form.html'
+    success_url = reverse_lazy('teacher_list')
 
-@login_required
-def teachers(request):
-    teachers_list = Teacher.objects.order_by('registered')
-    context = {'teachers_list': teachers_list}
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(TeacherCreate, self).form_valid(form)
 
-    return render(request, 'AcademyApp/teachers.html', context)
+class TeacherUpdate(UpdateView):
+    model = Teacher
+    form_class = TeacherForm
+    template_name = 'AcademyApp/form.html'
+    success_url = reverse_lazy('teacher_list')
 
-@login_required
-def teacher(request, teacher_id):
-    try:
-        tchr = Teacher.objects.get(pk=teacher_id)
-        context = {'tchr': tchr}
-    except Teacher.DoesNotExist:
-        raise Http404("Teacher does not exist")
-    return render(request, 'AcademyApp/teacher.html', context)
+class TeacherDelete(DeleteView):
+    model = Teacher
+    template_name = "AcademyApp/confirm_delete.html"
+    success_url = reverse_lazy('teacher_list')
 
-@login_required
-def teachersjson(request):
-    return HttpResponse(serializers.serialize('json', Teacher.objects.all()))
 
-@login_required
-def teacherssxml(request):
-    return HttpResponse(serializers.serialize('xml', Teacher.objects.all()))
+########################################## ACADEMIES ######################################################
+def academy_list_json(request):
+    response = HttpResponse(serializers.serialize('json', Academy.objects.all()), content_type='text/plain', charset='utf8')
+    response['Content-Disposition'] = 'attachment; filename=academies.json'
+    return response
 
-@login_required
-def add_acdmy(request):
-    if request.method == 'POST':
-        form = AcdmyForm(request.POST)
+def academy_list_xml(request):
+    response = HttpResponse(serializers.serialize('xml', Academy.objects.all()), content_type='text/plain', charset='utf8')
+    response['Content-Disposition'] = 'attachment; filename=academies.xml'
+    return response
 
-        if form.is_valid():
-            form.save()
+class AcademyDetail(DetailView):
+    model = Academy
+    template_name = 'AcademyApp/academy_detail.html'
 
-            return HttpResponseRedirect('get/list')
-    else:
-        form = AcdmyForm()
+    def get_context_data(self, **kwargs):
+        context = super(AcademyDetail, self).get_context_data(**kwargs)
+        return context
 
-    return render(request, 'AcademyApp/addAcademy.html', {'form': form})
+class AcademyList(ListView):
+    model = Academy
+    template_name = 'AcademyApp/academy_list.html'
 
-@login_required
-def edit_acdmy(request, academy_id):
-    obj = get_object_or_404(Academy, pk=academy_id)
-    form = AcdmyForm(request.POST or None, request.FILES or None, instance=obj)
-    if request.method == 'POST':
-        if form.is_valid():
-            form.save()
-            return academies(request)
-    return render(request, 'AcademyApp/addAcademy.html', {'form': form})
+class AcademyCreate(CreateView):
+    model = Academy
+    form_class = AcademyForm
+    template_name = 'AcademyApp/form.html'
+    success_url = reverse_lazy('academy_list')
 
-@login_required
-def rem_acdmy(request, academy_id):
-    Academy.objects.get(pk=academy_id).delete()
-    return academies(request)
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(AcademyCreate, self).form_valid(form)
 
-@login_required
-def academies(request):
-    academies_list = Academy.objects.order_by('registered')
-    context = {'academies_list': academies_list}
+class AcademyUpdate(UpdateView):
+    model = Academy
+    form_class = AcademyForm
+    template_name = 'AcademyApp/form.html'
+    success_url = reverse_lazy('academy_list')
 
-    return render(request, 'AcademyApp/academies.html', context)
-
-@login_required
-def academy(request, academy_id):
-    try:
-        acdmy = Academy.objects.get(pk=academy_id)
-        context = {'acdmy': acdmy}
-    except Academy.DoesNotExist:
-        raise Http404("Academy does not exist")
-    return render(request, 'AcademyApp/academy.html', context)
-
-@login_required
-def academiesjson(request):
-    return HttpResponse(serializers.serialize('json', Academy.objects.all()))
-
-@login_required
-def academiesxml(request):
-    return HttpResponse(serializers.serialize('xml', Academy.objects.all()))
+class AcademyDelete(DeleteView):
+    model = Academy
+    template_name = "AcademyApp/confirm_delete.html"
+    success_url = reverse_lazy('academy_list')

@@ -1,0 +1,9 @@
+{% include "AcademyApp/header.html" %}
+{% load staticfiles %}
+    <section>
+        <form action="" method="post">{% csrf_token %}
+            <p>Are you sure you want to delete "{{ object }}"?</p>
+            <input type="submit" value="Confirm" />
+        </form>
+    </section>
+{% include "AcademyApp/footer.html" %}

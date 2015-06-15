@@ -39,20 +39,6 @@ def auth_user(request):
 def index(request):
     return render(request, 'AcademyApp/index.html', {})
 
-
-def teacher_review(request,	pk):
-    teacher = get_object_or_404(Teacher,	pk=pk)
-    review = TeacherReview(rating=request.POST['rating'], comment=request.POST['comment'], user=request.user, teacher=teacher)
-    review.save()
-    return HttpResponseRedirect(reverse('gestacademy:teacher_detail',	args=(teacher.id,)))
-
-def academy_review(request,	pk):
-    academy = get_object_or_404(Academy,	pk=pk)
-    review = AcademyReview(rating=request.POST['rating'], comment=request.POST['comment'], user=request.user, academy=academy)
-    review.save()
-    return HttpResponseRedirect(reverse('gestacademy:academy_detail',	args=(academy.id,)))
-
-
 ########################################## STUDENTS ######################################################
 def student_list_json(request):
     response = HttpResponse(serializers.serialize('json', Student.objects.all()), content_type='text/plain', charset='utf8')
@@ -142,6 +128,12 @@ class TeacherDelete(DeleteView):
     template_name = "AcademyApp/confirm_delete.html"
     success_url = reverse_lazy('teacher_list')
 
+def teacher_review(request,	pk):
+    teacher = get_object_or_404(Teacher,	pk=pk)
+    review = TeacherReview(rating=request.POST['rating'], comment=request.POST['comment'], user=request.user, teacher=teacher)
+    review.save()
+    return HttpResponseRedirect(reverse('teacher_detail',	args=(teacher.id,)))
+
 
 ########################################## ACADEMIES ######################################################
 def academy_list_json(request):
@@ -186,3 +178,9 @@ class AcademyDelete(DeleteView):
     model = Academy
     template_name = "AcademyApp/confirm_delete.html"
     success_url = reverse_lazy('academy_list')
+
+def academy_review(request,	pk):
+    academy = get_object_or_404(Academy, pk=pk)
+    review = AcademyReview(rating=request.POST['rating'], comment=request.POST['comment'], user=request.user, academy=academy)
+    review.save()
+    return HttpResponseRedirect(reverse('academy_detail',	args=(academy.id,)))

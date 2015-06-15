@@ -1,16 +1,16 @@
-{% include "AcademyApp/base.html" %}
+{% extends "AcademyApp/base.html" %}
 {% load staticfiles %}
-    <section>
-        <form action="" method="post">
-            <table>
-                {% csrf_token %}
-                {{ form }}
-                <tr><th>
-                    <input type="submit" value="Submit" />
-                    <a href="javascript:history.back()">
-                        <img class="bt" id="return2" src="{% static "img/return.png"%}" />
-                    </a>
-                </th></tr>
-            </table>
-        </form>
-    </section>
+{% block content %}
+    <form action="" method="post">
+        <table>
+            {% csrf_token %}
+            {{ form }}
+            <tr><th>
+                <input type="submit" value="Submit" />
+                <a href="javascript:history.back()">
+                    <img class="bt" id="return2" src="{% static "img/return.png"%}" />
+                </a>
+            </th></tr>
+        </table>
+    </form>
+{% endblock %}

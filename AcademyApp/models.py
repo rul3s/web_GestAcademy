@@ -19,7 +19,7 @@ class Student(models.Model):
         return u"%s" % self.name
 
     def get_absolute_url(self):
-        return reverse('gestacademy:student_detail', kwargs={'pk': self.pk})
+        return reverse('student_detail', kwargs={'pk': self.pk})
 
 
 class Teacher(models.Model):
@@ -36,7 +36,7 @@ class Teacher(models.Model):
         return u"%s" % self.name
 
     def get_absolute_url(self):
-        return reverse('gestacademy:teacher_detail', kwargs={'pk': self.pk})
+        return reverse('teacher_detail', kwargs={'pk': self.pk})
 
 
 class Academy(models.Model):
@@ -50,7 +50,7 @@ class Academy(models.Model):
         return u"%s" % self.name
 
     def get_absolute_url(self):
-        return reverse('gestacademy:teacher_detail', kwargs={'pk': self.pk})
+        return reverse('teacher_detail', kwargs={'pk': self.pk})
 
 
 class TeacherStudents(models.Model):
@@ -74,7 +74,7 @@ class Review(models.Model):
 
 
 class TeacherReview(Review):
-    restaurant = models.ForeignKey(Teacher)
+    teacher = models.ForeignKey(Teacher)
 
 class AcademyReview(Review):
-    restaurant = models.ForeignKey(Academy)
+    academy = models.ForeignKey(Academy)

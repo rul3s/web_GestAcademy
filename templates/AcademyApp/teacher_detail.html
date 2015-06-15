@@ -4,7 +4,7 @@
     {% if object %}
         <span vocab="http://schema.org/" typeof="Teacher">
         <table>
-            <caption><h1>Teacher information</h1></caption>
+            <h1>Teacher information</h1>
             <tbody>
                 <tr>
                     <th>Name</th>
@@ -42,6 +42,30 @@
             </tbody>
         </table>
         </span>
+
+        <h2>Reviews</h2>
+        <ul>
+        {% for review in teacher.teacherreview_set.all %}
+            <li>
+                <p>{{ review.rating }} star{{ review.rating|pluralize }}</p>
+                <p>{{ review.comment }}</p>
+                <p>Created by {{ review.user }} on {{ review.date }}</p>
+            </li>
+        {%	endfor	%}
+        </ul>
+
+        <h3>Add review</h3>
+        <form action="{% url 'teacher_review_create' teacher.id %}" method="post">
+            {%	csrf_token	%}
+            Message: <textarea name="comment" id="comment" rows="4"></textarea>
+            <p>Rating:</p>
+                <label><input type="radio" name="rating" value="1">1 Star</label>
+                <label><input type="radio" name="rating" value="2">2 Star</label>
+                <label><input type="radio" name="rating" value="3" checked>3 Star</label>
+                <label><input type="radio" name="rating" value="4">4 Star</label>
+                <label><input type="radio" name="rating" value="5">5 Star</label><br>
+            <input	type="submit"	value="Review"	/>
+        </form>
 
     {% else %}
         <h1>Problem getting teacher</h1>

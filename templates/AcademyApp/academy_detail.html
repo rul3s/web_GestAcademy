@@ -2,22 +2,20 @@
 {% load staticfiles %}
 {% block content %}
     {% if object %}
-        <span vocab="http://schema.org/" typeof="Academy">
+        <span vocab="http://schema.org/" typeof="School">
         <table>
-            <caption><h1>Academy information</h1></caption>
+            <h1>Academy information</h1>
             <tbody>
                 <tr>
                     <th>Name</th>
                     <td><span property="name">{{  object.name }}</span></td>
                 </tr>
-                <tr>
-                    <th>City</th>
-                    <td><span property="city">{{ object.city }}</span></td>
+                <tr property="address"  typeof="PostalAddress">
+                    <th>Address</th>
+                    <td><span property="addressLocality">{{ object.city }}</span></td>
+                    <td><span property="streetAddress">{{ object.direction }}</span></td>
                 </tr>
-                <tr>
-                    <th>Street</th>
-                    <td><span property="direction">{{ object.direction }}</span></td>
-                </tr>
+
                 <tr>
                     <th><a href="javascript:history.back()"><img class="bt" src="{% static "img/return.png"%}" /></a>
                         {% if object.author.get_username == user.username %}
@@ -27,29 +25,48 @@
                 </tr>
             </tbody>
         </table>
+
+        {% if academy.academyreview_set.all|length > 0%}
+            <span rel="aggregateRating">
+                <p typeof="AggregateRating">Average	rating
+                    <span property="ratingValue">{{ academy.averageRating|stringformat:".1f"	}}</span>
+                    {% with academy.academyreview_set.all|length as reviewCount	%}
+                        from <span property="reviewCount">{{ reviewCount }} </span> review{{ reviewCount|pluralize }}
+                    {%	endwith	%}
+				</p>
+            </span>
+
+            <h2>Reviews</h2>
+            <ul rel="review">
+            {% for review in academy.academyreview_set.all %}
+                <li	typeof="Review">
+                    <p	rel="reviewRating"	typeof="Rating">
+                        <span property="worstRating" content="{{ RATING_CHOICES.0.0 }}"></span>
+                        <span property="ratingValue">{{ review.rating }}</span>
+                        star{{ review.rating|pluralize }}
+                        {% with	RATING_CHOICES|last	as best %}
+                        <span property="bestRating"	content="{{ best.0 }}"></span>
+                        {% endwith	%}
+                    </p>
+                    <p property="description">{{ review.comment }}</p>
+                    <p>Created by <span property="author">{{ review.user }}</span> on
+                    <span property="datePublished">{{ review.date}}</span></p>
+				</li>
+            {%	endfor	%}
+            </ul>
+        {%  endif %}
         </span>
 
-        <caption><h2>Reviews</h2></caption>
-        <ul>
-        {% for review in academy.academyreview_set.all %}
-            <li>
-                <p>{{ review.rating }} star{{ review.rating|pluralize }}</p>
-                <p>{{ review.comment }}</p>
-                <p>Created by {{ review.user }} on {{ review.date }}</p>
-            </li>
-        {%	endfor	%}
-        </ul>
-
-        <caption><h3>Add review</h3></caption>
+        <h3>Add review</h3>
         <form action="{% url 'academy_review_create' academy.id %}" method="post">
             {%	csrf_token	%}
             Message: <textarea name="comment" id="comment" rows="4"></textarea>
             <p>Rating:</p>
-            <p>{% for rate in RATING_CHOICES %}
-            <input type="radio"	name="rating" id="rating{{ forloop.counter }}" value="{{ rate.1 }}"	/>
-            <label for="choice{{ forloop.counter }}">{{ rate.1 }} star{{ rate.0|pluralize }}</label>
-            <br/>{%	endfor	%}
-            </p>
+                <label><input type="radio" name="rating" value="1">1 Star</label>
+                <label><input type="radio" name="rating" value="2">2 Star</label>
+                <label><input type="radio" name="rating" value="3" checked>3 Star</label>
+                <label><input type="radio" name="rating" value="4">4 Star</label>
+                <label><input type="radio" name="rating" value="5">5 Star</label><br>
             <input	type="submit"	value="Review"	/>
         </form>
     {% else %}
@@ -58,5 +75,5 @@
 {% endblock %}
 
 {% block footer %}
-    Created	by {{ object.author.get_username }} on {{ object.registered }}
+    <p>Created	by {{ object.author.get_username }} on {{ object.registered }}</p>
 {% endblock	%}

@@ -47,3 +47,16 @@ urlpatterns = [
     url(r'^post/academy/(?P<pk>\d+)/reviews/create/$',
                                                     login_required(academy_review),	                name='academy_review_create'),
 ]
+
+
+'''
+    url(r'^api/$', 'api_root'),
+    url(r'^api/academies/$',                        APIAcademyList.as_view(),                       name='academy-list'),
+    url(r'^api/academies/(?P<pk>\d+)/$',            APIAcademyDetail.as_view(),                     name='academy-detail'),
+    url(r'^api/teachers/$',                         APITeacherList.as_view(),                       name='teacher-list'),
+    url(r'^api/teachers/(?P<pk>\d+)/$',             APITeacherDetail.as_view(),                     name='teacher-detail'),
+    url(r'^api/academyreviews/$',	                APIAcademyReviewList.as_view(),                 name='academyreview-list'),
+    url(r'^api/academyreviews/(?P<pk>\d+)/$',	    APIAcademyReviewDetail.as_view(),               name='academyreview-detail'),
+    url(r'^api/teacherreviews/$',	                APITeacherReviewList.as_view(),                 name='teacherreview-list'),
+    url(r'^api/teacherreviews/(?P<pk>\d+)/$',	    APITeacherReviewDetail.as_view(),               name='teacherreview-detail'),
+'''

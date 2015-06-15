@@ -13,7 +13,7 @@ class Student(models.Model):
     email = models.EmailField()
     academy = models.ForeignKey('Academy', blank=True, null=True)
     registered = models.DateTimeField(default=datetime.now())
-    author = models.ForeignKey(User,	default=1)
+    author = models.ForeignKey(User, default=1)
 
     def __unicode__(self):
         return u"%s" % self.name
@@ -30,7 +30,7 @@ class Teacher(models.Model):
     email = models.EmailField()
     registered = models.DateTimeField(default=datetime.now())
     academy = models.ForeignKey('Academy', blank=True, null=True)
-    author = models.ForeignKey(User,	default=1)
+    author = models.ForeignKey(User, default=1)
 
     def __unicode__(self):
         return u"%s" % self.name
@@ -44,7 +44,7 @@ class Academy(models.Model):
     direction = models.CharField(max_length=150)
     city = models.CharField(max_length=50)
     registered = models.DateTimeField(default=datetime.now())
-    author = models.ForeignKey(User,	default=1)
+    author = models.ForeignKey(User, default=1)
 
     def __unicode__(self):
         return u"%s" % self.name

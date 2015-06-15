@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 'rest_framework',
     'AcademyApp'
 )
 
@@ -88,3 +89,13 @@ STATIC_URL = '/static/'
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR,  'templates'),
 )
+'''
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES':	('rest_framework.permissions.IsAuthenticatedOrReadOnly',),
+    'PAGINATE_BY':	10,
+    'DEFAULT_RENDERER_CLASSES':	(
+        'rest_framework.renderers.BrowsableAPIRenderer',
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.XMLRenderer',)
+}
+'''

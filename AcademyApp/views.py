@@ -8,6 +8,9 @@ from .forms import *
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
+from serializers import	AcademySerializer, AcademyReviewSerializer,	TeacherSerializer, TeacherReviewSerializer, StudentSerializer
+from rest_framework	import	generics
+from rest_framework.decorators	import	api_view
 
 def login_view(request):
     template = loader.get_template('AcademyApp/login.html')
@@ -83,6 +86,13 @@ class StudentDelete(DeleteView):
     template_name = "AcademyApp/confirm_delete.html"
     success_url = reverse_lazy('student_list')
 
+class APIStudentList(generics.ListCreateAPIView):
+    model = Student
+    serializer_class = StudentSerializer
+
+class APIStudentDetail(generics.RetrieveUpdateDestroyAPIView):
+    model =	Student
+    serializer_class = StudentSerializer
 
 ########################################## TEACHERS ######################################################
 def teacher_list_json(request):
@@ -134,6 +144,21 @@ def teacher_review(request,	pk):
     review.save()
     return HttpResponseRedirect(reverse('teacher_detail',	args=(teacher.id,)))
 
+class APITeacherList(generics.ListCreateAPIView):
+    model = Teacher
+    serializer_class = TeacherSerializer
+
+class APITeacherDetail(generics.RetrieveUpdateDestroyAPIView):
+    model = Teacher
+    serializer_class = TeacherSerializer
+
+class APITeacherReviewList(generics.ListCreateAPIView):
+    model = TeacherReview
+    serializer_class = TeacherReviewSerializer
+
+class APITeacherReviewDetail(generics.RetrieveUpdateDestroyAPIView):
+    model = TeacherReview
+    serializer_class = TeacherReviewSerializer
 
 ########################################## ACADEMIES ######################################################
 def academy_list_json(request):
@@ -184,3 +209,19 @@ def academy_review(request,	pk):
     review = AcademyReview(rating=request.POST['rating'], comment=request.POST['comment'], user=request.user, academy=academy)
     review.save()
     return HttpResponseRedirect(reverse('academy_detail',	args=(academy.id,)))
+
+class APIAcademyList(generics.ListCreateAPIView):
+    model = Academy
+    serializer_class = AcademySerializer
+
+class APIAcademyDetail(generics.RetrieveUpdateDestroyAPIView):
+    model = Academy
+    serializer_class = AcademySerializer
+
+class APIAcademyReviewList(generics.ListCreateAPIView):
+    model = AcademyReview
+    serializer_class = AcademyReviewSerializer
+
+class APIAcademyReviewDetail(generics.RetrieveUpdateDestroyAPIView):
+    model = AcademyReview
+    serializer_class = AcademyReviewSerializer

@@ -1,31 +1,23 @@
-'''
-# Modify Student: /AcademyApp/update/student/1
-url(r'^update/student/(?P<pk>[0-9]+)/$', edit_std, name='student_update'),
-# Delete Student: /AcademyApp/delete/student/1
-url(r'^delete/student/(?P<pk>[0-9]+)/$', StudentDelete.as_view(), name='student_remove'),
+<caption><h2>Reviews</h2></caption>
+    <ul>
+    {% for review in restaurant.restaurantreview_set.all %}
+        <li>
+            <p>{{ review.rating }} star{{ review.rating|pluralize }}</p>
+            <p>{{ review.comment }}</p>
+            <p>Created by {{ review.user }} on {{ review.date }}</p>
+        </li>
+    {%	endfor	%}
+    </ul>
 
-
-
-
-
-
-    url(r'^get/teacher/(?P<pk>\d+)/$', TeacherDetail.as_view(), name='teacher_detail'),
-    url(r'^get/teacher/list$', teacher_list, name='teacher_list'),
-    url(r'^get/teacher/list.json$', teacher_list_json, name='teacher_list_json'),
-    url(r'^get/teacher/list.xml$', teacher_list_xml, name='teacher_list_xml'),
-    url(r'^post/teacher$', TeacherCreate.as_view(success_url=reverse_lazy('index')), name='teacher_create'),
-    url(r'^update/teacher/(?P<pk>[0-9]+)/$', TeacherUpdate.as_view(), name='teacher_update'),
-    url(r'^delete/teacher/(?P<pk>[0-9]+)/$', TeacherDelete.as_view(), name='teacher_delete'),
-
-    url(r'^get/academy/(?P<pk>\d+)/$', AcademyDetail.as_view(), name='academy_detail'),
-    url(r'^get/academy/list$', academy_list, name='academy_list'),
-    url(r'^get/teacher/list.json$', academy_list_json, name='academy_list_json'),
-    url(r'^get/teacher/list.xml$', academy_list_xml, name='academy_list_xml'),
-    url(r'^post/academy$', AcademyCreate.as_view(success_url=reverse_lazy('index')), name='academy_create'),
-    url(r'^update/student/(?P<pk>[0-9]+)/$', AcademyUpdate.as_view(), name='academy_update'),
-    url(r'^delete/student/(?P<pk>[0-9]+)/$', AcademyDelete.as_view(), name='academy_delete'),
-
-
-
-
-'''
+    <caption><h3>Add review</h3></caption>
+    <form action="{% url 'teacher_review_create' restaurant.id %}" method="post">
+        {%	csrf_token	%}
+        Message: <textarea name="comment" id="comment" rows="4"></textarea>
+        <p>Rating:</p>
+        <p>{% for rate in RATING_CHOICES %}
+        <input type="radio"	name="rating" id="rating{{ forloop.counter }}" value="{{ rate.1 }}"	/>
+        <label for="choice{{ forloop.counter }}">{{ rate.1 }} star{{ rate.0|pluralize }}</label>
+        <br/>{%	endfor	%}
+        </p>
+        <input	type="submit"	value="Review"	/>
+    </form>

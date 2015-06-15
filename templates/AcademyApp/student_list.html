@@ -1,25 +1,25 @@
-{% include "AcademyApp/header.html" %}
+{% extends "AcademyApp/base.html" %}
 {% load staticfiles %}
-        <section>
-            {% if object_list %}
-            <h1>Current students list</h1>
-            <ul>
-            {% for student in object_list %}
-                <li><a href="{%  url 'student_detail' student.id %} ">{{ student.name }}</a></li>
-            {% endfor %}
-            </ul>
-        {% else %}
-            <p>No students are available.</p>
-        {% endif %}
-            <ul>
-                <li><a href="javascript:history.back()"><img class="bt" id="return" src="{% static "img/return.png"%}" /></a>
-                    <a href="{%  url 'student_create' %}"><img class="bt" id="return" src="{% static "img/add.png"%}" /></a></li>
-            </ul>
+{% block content %}
+    {% if object_list %}
+        <h1>Current students list</h1>
+        <ul>
+        {% for student in object_list %}
+            <li><a href="{%  url 'student_detail' student.id %} ">{{ student.name }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No students are available.</p>
+    {% endif %}
+    <ul>
+        <li><a href="javascript:history.back()"><img class="bt" id="return" src="{% static "img/return.png"%}" /></a>
+            <a href="{%  url 'student_create' %}"><img class="bt" id="return" src="{% static "img/add.png"%}" /></a></li>
+    </ul>
+{% endblock %}
 
-        </section>
-        <footer>
-            <p>Download list in:
-                <a href="{%  url 'student_list_json' %}">JSON</a>
-                <a href="{%  url 'student_list_xml' %}">XML</a></p>
-        </footer>
-{% include "AcademyApp/footer.html" %}
+{% block footer %}
+    <p>Download list in:
+        <a href="{%  url 'student_list_json' %}">JSON</a>
+        <a href="{%  url 'student_list_xml' %}">XML</a>
+    </p>
+{%  endblock  %}

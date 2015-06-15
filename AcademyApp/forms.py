@@ -5,15 +5,15 @@ from AcademyApp.models import *
 class StudentForm(ModelForm):
     class Meta:
         model = Student
-        exclude = ('registered',)
+        exclude = ('registered', 'author')
 
 
 class TeacherForm(ModelForm):
     class Meta:
         model = Teacher
-        exclude = ('registered',)
+        exclude = ('registered', 'author')
 
 class AcademyForm(ModelForm):
     class Meta:
         model = Academy
-        exclude = ('registered',)
+        exclude = ('registered', 'author')

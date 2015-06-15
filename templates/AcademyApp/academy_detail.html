@@ -1,31 +1,62 @@
-{% include "AcademyApp/header.html" %}
+{% extends "AcademyApp/base.html" %}
 {% load staticfiles %}
-        <section>
-            {% if object %}
-            <table>
-                <caption><h1>Academy information</h1></caption>
-                <tbody>
-                    <tr>
-                        <th>Name</th>
-                        <td>{{  object.name }}</td>
-                    </tr>
-                    <tr>
-                        <th>City</th>
-                        <td>{{ object.city }}</td>
-                    </tr>
-                    <tr>
-                        <th>Street</th>
-                        <td>{{ object.direction }}</td>
-                    </tr>
-                    <tr>
-                        <th><a href="javascript:history.back()"><img class="bt" src="{% static "img/return.png"%}" /></a>
+{% block content %}
+    {% if object %}
+        <span vocab="http://schema.org/" typeof="Academy">
+        <table>
+            <caption><h1>Academy information</h1></caption>
+            <tbody>
+                <tr>
+                    <th>Name</th>
+                    <td><span property="name">{{  object.name }}</span></td>
+                </tr>
+                <tr>
+                    <th>City</th>
+                    <td><span property="city">{{ object.city }}</span></td>
+                </tr>
+                <tr>
+                    <th>Street</th>
+                    <td><span property="direction">{{ object.direction }}</span></td>
+                </tr>
+                <tr>
+                    <th><a href="javascript:history.back()"><img class="bt" src="{% static "img/return.png"%}" /></a>
+                        {% if object.author.get_username == user.username %}
                             <a href="{%  url 'academy_update' object.id %}"><img class="bt" src="{% static "img/edit.png"%}" /></a>
                             <a href="{%  url 'academy_delete' object.id %}"><img class="bt" src="{% static "img/remove.png"%}" /></a></th>
-                    </tr>
-                </tbody>
-            </table>
-            {% else %}
-                <h1>Problem getting academy</h1>
-            {% endif %}
-        </section>
-{% include "AcademyApp/footer.html" %}
+                        {% endif %}
+                </tr>
+            </tbody>
+        </table>
+        </span>
+
+        <caption><h2>Reviews</h2></caption>
+        <ul>
+        {% for review in academy.academyreview_set.all %}
+            <li>
+                <p>{{ review.rating }} star{{ review.rating|pluralize }}</p>
+                <p>{{ review.comment }}</p>
+                <p>Created by {{ review.user }} on {{ review.date }}</p>
+            </li>
+        {%	endfor	%}
+        </ul>
+
+        <caption><h3>Add review</h3></caption>
+        <form action="{% url 'academy_review_create' academy.id %}" method="post">
+            {%	csrf_token	%}
+            Message: <textarea name="comment" id="comment" rows="4"></textarea>
+            <p>Rating:</p>
+            <p>{% for rate in RATING_CHOICES %}
+            <input type="radio"	name="rating" id="rating{{ forloop.counter }}" value="{{ rate.1 }}"	/>
+            <label for="choice{{ forloop.counter }}">{{ rate.1 }} star{{ rate.0|pluralize }}</label>
+            <br/>{%	endfor	%}
+            </p>
+            <input	type="submit"	value="Review"	/>
+        </form>
+    {% else %}
+        <h1>Problem getting academy</h1>
+    {% endif %}
+{% endblock %}
+
+{% block footer %}
+    Created	by {{ object.author.get_username }} on {{ object.registered }}
+{% endblock	%}

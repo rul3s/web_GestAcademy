@@ -33,6 +33,8 @@ urlpatterns = [
     url(r'^delete/teacher/(?P<pk>[0-9]+)/$',        login_required(TeacherDelete.as_view()),        name='teacher_delete'),
     url(r'^get/teacher/list.json$',                 login_required(teacher_list_json),              name='teacher_list_json'),
     url(r'^get/teacher/list.xml$',                  login_required(teacher_list_xml),               name='teacher_list_xml'),
+    url(r'^post/teacher/(?P<pk>\d+)/reviews/create/$',
+                                                    login_required(teacher_review),	                name='teacher_review_create'),
 
 
     url(r'^get/academy/(?P<pk>\d+)/$',              login_required(AcademyDetail.as_view()),        name='academy_detail'),
@@ -42,4 +44,6 @@ urlpatterns = [
     url(r'^delete/academy/(?P<pk>[0-9]+)/$',        login_required(AcademyDelete.as_view()),        name='academy_delete'),
     url(r'^get/academy/list.json$',                 login_required(academy_list_json),              name='academy_list_json'),
     url(r'^get/academy/list.xml$',                  login_required(academy_list_xml),               name='academy_list_xml'),
+    url(r'^post/academy/(?P<pk>\d+)/reviews/create/$',
+                                                    login_required(academy_review),	                name='academy_review_create'),
 ]

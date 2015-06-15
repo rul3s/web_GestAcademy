@@ -1,44 +1,54 @@
-{% include "AcademyApp/header.html" %}
+{% extends "AcademyApp/base.html" %}
 {% load staticfiles %}
-        <section>
-        {% if object %}
-            <table>
-                <caption><h1>Teacher information<h1></caption>
-                <tbody>
-                    <tr>
-                        <th>Name</th>
-                        <td>{{  object.name }}</td>
-                    </tr>
-                    <tr>
-                        <th>City</th>
-                        <td>{{ object.city }}</td>
-                    </tr>
-                    <tr>
-                        <th>Street</th>
-                        <td>{{ object.direction }}</td>
-                    </tr>
-                    <tr>
-                        <th>Phone Number</th>
-                        <td>{{ object.telephone }}</td>
-                    </tr>
-                    <tr>
-                        <th>eMail</th>
-                        <td>{{ object.email }}</td>
-                    </tr>
-                    <tr>
-                        <th>Academy</th>
-                        <td>{{ object.academy }}</td>
-                    </tr>
-                    <tr>
-                        <th><a href="javascript:history.back()"><img class="bt" src="{% static "img/return.png"%}" /></a>
+{% block content %}
+    {% if object %}
+        <span vocab="http://schema.org/" typeof="Teacher">
+        <table>
+            <caption><h1>Teacher information</h1></caption>
+            <tbody>
+                <tr>
+                    <th>Name</th>
+                    <td>
+                        <span property="name">{{  object.name }}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>City</th>
+                    <td><span property="city">{{ object.city }}</span></td>
+                </tr>
+                <tr>
+                    <th>Street</th>
+                    <td><span property="direction">{{ object.direction }}</span></td>
+                </tr>
+                <tr>
+                    <th>Phone Number</th>
+                    <td><span property="telephone">{{ object.telephone }}</span></td>
+                </tr>
+                <tr>
+                    <th>eMail</th>
+                    <td><span property="email">{{ object.email }}</span></td>
+                </tr>
+                <tr>
+                    <th>Academy</th>
+                    <td><span property="academy">{{ object.academy }}</span></td>
+                </tr>
+                <tr>
+                    <th><a href="javascript:history.back()"><img class="bt" src="{% static "img/return.png"%}" /></a>
+                        {% if object.author.get_username == user.username %}
                             <a href="{%  url 'teacher_update' object.id %}"><img class="bt" src="{% static "img/edit.png"%}" /></a>
                             <a href="{%  url 'teacher_delete' object.id %}"><img class="bt" src="{% static "img/remove.png"%}" /></a></th>
-                    </tr>
-                </tbody>
-            </table>
-            {% else %}
-                <h1>Problem getting teacher</h1>
-            {% endif %}
+                        {% endif %}
+                </tr>
+            </tbody>
+        </table>
+        </span>
 
-        </section>
-{% include "AcademyApp/footer.html" %}
+    {% else %}
+        <h1>Problem getting teacher</h1>
+    {% endif %}
+{% endblock	%}
+
+{% block footer %}
+    Created	by {{ object.author.get_username }} on {{ object.registered }}
+{% endblock	%}
+

@@ -25,3 +25,14 @@
                 <li><a href="{%  url 'student_list' %}">View Students</a></li>
             </ul>
         </nav>
+        <section>
+            {% block content %}
+                {% if error_message	%}<p><strong>{{ error_message }}</strong></p>{%	endif %}
+            {% endblock %}
+        </section>
+        <footer>
+        {% block footer %}
+        {% endblock %}
+    </footer>
+    </div>
+</body>

@@ -5,7 +5,9 @@ from django.core import serializers
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
 from .forms import *
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse_lazy, reverse
+from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 
 def login_view(request):
     template = loader.get_template('AcademyApp/login.html')
@@ -36,6 +38,19 @@ def auth_user(request):
 
 def index(request):
     return render(request, 'AcademyApp/index.html', {})
+
+
+def teacher_review(request,	pk):
+    teacher = get_object_or_404(Teacher,	pk=pk)
+    review = TeacherReview(rating=request.POST['rating'], comment=request.POST['comment'], user=request.user, teacher=teacher)
+    review.save()
+    return HttpResponseRedirect(reverse('gestacademy:teacher_detail',	args=(teacher.id,)))
+
+def academy_review(request,	pk):
+    academy = get_object_or_404(Academy,	pk=pk)
+    review = AcademyReview(rating=request.POST['rating'], comment=request.POST['comment'], user=request.user, academy=academy)
+    review.save()
+    return HttpResponseRedirect(reverse('gestacademy:academy_detail',	args=(academy.id,)))
 
 
 ########################################## STUDENTS ######################################################

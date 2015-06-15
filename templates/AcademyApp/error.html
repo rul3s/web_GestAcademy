@@ -11,31 +11,12 @@
     <div id="content">
         <div id="main">
             <header>
-                <p>Logged as {{user.username}} <a href="{%  url 'logout_view'%}">logout</a></p>
-                <a href="/AcademyApp/index"><img src="{% static "img/title.jpg" %}"/></a>
+                <img src="{% static "img/title.jpg" %}">
             </header>
         </div>
-        <nav>
-            <ul class="menu">
-                <li><a href="{%  url 'getAcademies'%}">View Academies</a></li>
-                <li><a href="{%  url 'getTeachers'%}">View Teachers</a></li>
-                <li><a href="{%  url 'getStudents'%}">View Students</a></li>
-            </ul>
-        </nav>
+
         <section>
             <h1> LOGIN ERROR, <a href="javascript:history.back()"> return </a> </h1>
-
         </section>
     </div>
 </body>
-
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
-    <h1> ERROR LOGIN </h1>
-</body>
-</html>
